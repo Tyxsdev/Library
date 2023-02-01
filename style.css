@@ -13,3 +13,7 @@ section {
     border: 1px solid black;
     height: 100px;
 }
+
+.delete {
+    border: 1px solid black;
+}
