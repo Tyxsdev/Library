@@ -1,14 +1,16 @@
 const myLibrary = [];
-const booksDiv = document.querySelectorAll('.book');
+const bookDivs = document.querySelectorAll('.book');
+const arrayOfDivs = [...bookDivs];
+const paragraph = document.querySelectorAll('.book p');
 const button = document.querySelector('button');
 const section = document.querySelector('section');
-const bookPlaceHolder = [...booksDiv];
+const bookPlaceHolder = [...paragraph];
 let deleteButtons;
 
 function Toggle() {}
 
 Toggle.prototype.changeStatus = function () {
-  console.log(this.read);
+  return (this.read = `finish`);
 };
 
 function Books(title, author, pages, read) {
@@ -17,33 +19,42 @@ function Books(title, author, pages, read) {
   this.pages = pages;
   this.read = read;
   this.info = function () {
-    return `${title}, by ${author}, ${pages} pages, ${read}.`;
+    return `${title}, by ${author}, ${pages} pages, ${read}. `;
   };
 }
 
 Books.prototype = Object.create(Toggle.prototype);
 
-const a = new Books('s', 'as', 25, 'sa');
-console.log(a.changeStatus());
-
-function addBookToLibrary(book) {
-  myLibrary.push(book);
+function addBookToLibrary(text, book) {
+  myLibrary.push(text);
   if (bookPlaceHolder.length < myLibrary.length) {
     const newDiv = document.createElement('div');
+    const newP = document.createElement('p');
     newDiv.classList.add('book');
+    newDiv.appendChild(newP);
     section.appendChild(newDiv);
-    bookPlaceHolder.push(newDiv);
+    bookPlaceHolder.push(newP);
+    arrayOfDivs.push(newDiv);
   }
   for (let i = 0; i < myLibrary.length; i++) {
     bookPlaceHolder[i].dataset.index = `${i}`;
     if (bookPlaceHolder[i].textContent === '') {
       bookPlaceHolder[i].textContent = myLibrary[i];
       const remove = document.createElement('button');
+      const update = document.createElement('button');
       remove.textContent = 'Delete book';
       remove.classList.add('delete');
-      bookPlaceHolder[i].insertAdjacentElement('beforeend', remove);
-      deleteButtons = document.querySelectorAll('.delete');
-      deleteButtons.forEach((e) => e.addEventListener('click', deleteBook));
+      update.textContent = 'Finished';
+      update.classList.add('update');
+      arrayOfDivs[i].appendChild(remove);
+      arrayOfDivs[i].appendChild(update);
+      remove.addEventListener('click', deleteBook);
+
+      update.addEventListener('click', (x) => {
+        const textArray = bookPlaceHolder[i].textContent.split(', ');
+        textArray[3] = book.changeStatus();
+        bookPlaceHolder[i].textContent = `${textArray.join(', ')}.`;
+      });
       break;
     }
   }
@@ -67,7 +78,7 @@ function getForm(e) {
     statusValue = form.querySelector('#not-read').value;
   }
   const newBook = new Books(titleValue, authorValue, pagesValue, statusValue);
-  addBookToLibrary(newBook.info());
+  addBookToLibrary(newBook.info(), newBook);
   title.value = '';
   author.value = '';
   pages.value = '';
@@ -75,7 +86,10 @@ function getForm(e) {
 button.addEventListener('click', getForm);
 
 function deleteBook(e) {
+  console.log('a');
   const index = e.target.parentNode.dataset;
-  e.target.parentNode.textContent = '';
+  e.target.previousElementSibling.textContent = '';
+  e.target.nextElementSibling.remove();
+  e.target.remove();
   myLibrary.splice(index, 1);
 }
