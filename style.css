@@ -11,7 +11,11 @@ section {
 
 .book {
     border: 1px solid black;
-    height: 100px;
+    height: 200px;
+}
+
+.book p {
+    white-space: pre;
 }
 
 .delete {

@@ -5,12 +5,11 @@ const paragraph = document.querySelectorAll('.book p');
 const button = document.querySelector('button');
 const section = document.querySelector('section');
 const bookPlaceHolder = [...paragraph];
-let deleteButtons;
 
 function Toggle() {}
 
 Toggle.prototype.changeStatus = function () {
-  return (this.read = `finish`);
+  this.read = `finished`;
 };
 
 function Books(title, author, pages, read) {
@@ -25,12 +24,13 @@ function Books(title, author, pages, read) {
 
 Books.prototype = Object.create(Toggle.prototype);
 
-function addBookToLibrary(text, book) {
-  myLibrary.push(text);
+function addBookToLibrary(book) {
+  myLibrary.push(book);
   if (bookPlaceHolder.length < myLibrary.length) {
     const newDiv = document.createElement('div');
     const newP = document.createElement('p');
     newDiv.classList.add('book');
+    newP.setAttribute('style', 'white-space: pre;');
     newDiv.appendChild(newP);
     section.appendChild(newDiv);
     bookPlaceHolder.push(newP);
@@ -39,7 +39,10 @@ function addBookToLibrary(text, book) {
   for (let i = 0; i < myLibrary.length; i++) {
     bookPlaceHolder[i].dataset.index = `${i}`;
     if (bookPlaceHolder[i].textContent === '') {
-      bookPlaceHolder[i].textContent = myLibrary[i];
+      bookPlaceHolder[i].textContent = `Title: ${book.title} \r\n`;
+      bookPlaceHolder[i].textContent += `Author: ${book.author}\r\n`;
+      bookPlaceHolder[i].textContent += `Number of pages: ${book.pages}\r\n`;
+      bookPlaceHolder[i].textContent += `Lecture: ${book.read}`;
       const remove = document.createElement('button');
       const update = document.createElement('button');
       remove.textContent = 'Delete book';
@@ -50,10 +53,12 @@ function addBookToLibrary(text, book) {
       arrayOfDivs[i].appendChild(update);
       remove.addEventListener('click', deleteBook);
 
-      update.addEventListener('click', (x) => {
-        const textArray = bookPlaceHolder[i].textContent.split(', ');
-        textArray[3] = book.changeStatus();
-        bookPlaceHolder[i].textContent = `${textArray.join(', ')}.`;
+      update.addEventListener('click', () => {
+        book.changeStatus();
+        bookPlaceHolder[i].textContent = `Title: ${book.title} \r\n`;
+        bookPlaceHolder[i].textContent += `Author: ${book.author}\r\n`;
+        bookPlaceHolder[i].textContent += `Number of pages: ${book.pages}\r\n`;
+        bookPlaceHolder[i].textContent += `Lecture: ${book.read}`;
       });
       break;
     }
@@ -77,8 +82,23 @@ function getForm(e) {
   } else if (form.querySelector('#not-read').checked) {
     statusValue = form.querySelector('#not-read').value;
   }
+  if (
+    titleValue === null ||
+    titleValue === '' ||
+    authorValue === null ||
+    authorValue === '' ||
+    pagesValue === null ||
+    pagesValue === '' ||
+    statusValue === undefined ||
+    statusValue === ''
+  ) {
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    return;
+  }
   const newBook = new Books(titleValue, authorValue, pagesValue, statusValue);
-  addBookToLibrary(newBook.info(), newBook);
+  addBookToLibrary(newBook);
   title.value = '';
   author.value = '';
   pages.value = '';
@@ -86,7 +106,6 @@ function getForm(e) {
 button.addEventListener('click', getForm);
 
 function deleteBook(e) {
-  console.log('a');
   const index = e.target.parentNode.dataset;
   e.target.previousElementSibling.textContent = '';
   e.target.nextElementSibling.remove();
