@@ -3,7 +3,7 @@ const bookDivs = document.querySelectorAll('.book');
 const arrayOfDivs = [...bookDivs];
 const paragraph = document.querySelectorAll('.book p');
 const button = document.querySelector('button');
-const section = document.querySelector('section');
+const bookContainer = document.querySelector('.books-container');
 const bookPlaceHolder = [...paragraph];
 
 function Toggle() {}
@@ -25,14 +25,20 @@ function Books(title, author, pages, read) {
 Books.prototype = Object.create(Toggle.prototype);
 
 function addBookToLibrary(book) {
+  if (bookContainer.textContent === 'Sooooooo empty') {
+    bookContainer.textContent = '';
+  }
   myLibrary.push(book);
   if (bookPlaceHolder.length < myLibrary.length) {
     const newDiv = document.createElement('div');
     const newP = document.createElement('p');
+    const newButtonContainer = document.createElement('div');
+    newButtonContainer.classList.add('buttons');
     newDiv.classList.add('book');
     newP.setAttribute('style', 'white-space: pre;');
     newDiv.appendChild(newP);
-    section.appendChild(newDiv);
+    newDiv.appendChild(newButtonContainer);
+    bookContainer.appendChild(newDiv);
     bookPlaceHolder.push(newP);
     arrayOfDivs.push(newDiv);
   }
@@ -45,12 +51,13 @@ function addBookToLibrary(book) {
       bookPlaceHolder[i].textContent += `Lecture: ${book.read}`;
       const remove = document.createElement('button');
       const update = document.createElement('button');
+      const buttonContainer = arrayOfDivs[i].querySelector('div');
       remove.textContent = 'Delete book';
       remove.classList.add('delete');
       update.textContent = 'Finished';
       update.classList.add('update');
-      arrayOfDivs[i].appendChild(remove);
-      arrayOfDivs[i].appendChild(update);
+      buttonContainer.appendChild(remove);
+      buttonContainer.appendChild(update);
       remove.addEventListener('click', deleteBook);
 
       update.addEventListener('click', () => {
@@ -106,9 +113,15 @@ function getForm(e) {
 button.addEventListener('click', getForm);
 
 function deleteBook(e) {
-  const index = e.target.parentNode.dataset;
-  e.target.previousElementSibling.textContent = '';
+  const index = e.target.parentNode.parentNode.dataset;
+  e.target.parentElement.previousElementSibling.remove();
   e.target.nextElementSibling.remove();
-  e.target.remove();
+  e.target.parentNode.parentNode.remove();
   myLibrary.splice(index, 1);
+  arrayOfDivs.splice(index, 1);
+  bookPlaceHolder.splice(index, 1);
+  e.target.remove();
+  if (arrayOfDivs.length === 0) {
+    bookContainer.textContent = 'Sooooooo empty';
+  }
 }

@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -14,38 +17,36 @@
         <h1>Welcome to your personal library</h1>
     </Header>
     <main>
-        <h2>Your books</h2>
         <aside>
             <form action="" method="get" id="addBook">
-                <label for="title">Title: </label>
-                <input type="text" id="title" required>
-                <label for="author">Author</label>
-                <input type="text" id="author" required>
-                <label for="pages">Pages</label>
-                <input type="tel" id="pages" required>
-                <p>Status: </p>
-                <label for="read">Read</label>
-                <input type="radio" id="read" value="finished" name="status" required>
-                <label for="in-progress">In progress</label>
-                <input type="radio" id="in-progress" value="in progress" name="status" required>
-                <label for="not-read">Not read</label>
-                <input type="radio" id="not-read" value="not read" name="status" required>
-                <button type="submit">Submit</button>
+                <legend>What are you reading today?</legend>
+                <div class="title-container">
+                    <label for="title">Title: </label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="author-container">
+                    <label for="author">Author</label>
+                    <input type="text" id="author" required>
+                </div>
+                <div class="pages-container">
+                    <label for="pages">Pages</label>
+                    <input type="tel" id="pages" required>
+                </div>
+                <div class="status-container">
+                    <p>Status: </p>
+                    <label for="read">Read</label>
+                    <input type="radio" id="read" value="finished" name="status" required>
+                    <label for="in-progress">In progress</label>
+                    <input type="radio" id="in-progress" value="in progress" name="status" required>
+                    <label for="not-read">Not read</label>
+                    <input type="radio" id="not-read" value="not read" name="status" required>
+                </div>
+                <button type="submit">Add to Library</button>
             </form>
         </aside>
         <section>
-            <div class="book">
-                <p></p>
-            </div>
-            <div class="book">
-                <p></p>
-            </div>
-            <div class="book">
-                <p></p>
-            </div>
-            <div class="book">
-                <p></p>
-            </div>
+            <h2><span>Your books</span></h2>
+            <div class="books-container">Sooooooo empty</div>
         </section>
     </main>
     <script src="script.js"></script>

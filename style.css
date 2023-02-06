@@ -1,23 +1,157 @@
 html,
 body {
     box-sizing: border-box;
-    background-color: blanchedalmond;
+    background-color: #2e004a;
+    font-family: 'Itim', cursive;
+}
+
+header {
+    font-size: 36px;
+    text-align: center;
+    color: #eee3f5;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+}
+
+
+form {
+    box-shadow: 5px 5px 3px black;
+    border-radius: 1rem;
+    display: grid;
+    grid-template-rows: auto 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    font-size: 1.5rem;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #e59fe0;
+}
+
+form * {
+    padding: 0.5rem;
+}
+
+form legend {
+    justify-self: center;
+}
+
+form input {
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    border: 3px solid #3a68e9;
+}
+
+form input:focus {
+    transition: all 0.3s ease-in-out;
+    border: 3px solid #982de9;
+}
+
+.title-container label,
+.author-container label,
+.pages-container label {
+    text-decoration: underline;
+}
+
+.status-container {
+    padding-top: 0;
+}
+
+.status-container * {
+    margin: 0;
+    padding-top: 0;
+}
+
+.status-container p {
+    text-decoration: underline;
+}
+
+form button {
+    width: 10rem;
+    margin-left: 1rem;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 700;
 }
 
 section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: auto 1fr;
+    gap: 2rem;
+}
+
+section h2 {
+    justify-self: center;
+    margin: 0;
+    font-size: 30px;
+}
+
+section h2 span {
+    padding: 4px 10px;
+    border-radius: 10px;
+    background-color: #e59fe0;
+    box-shadow: 5px 5px 3px black;
+}
+
+.books-container {
+    text-align: center;
+    font-size: 50px;
+    font-style: italic;
+    color: #afb3b0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
 }
 
 .book {
-    border: 1px solid black;
+    color: black;
+    box-shadow: 5px 5px 3px black;
     height: 200px;
+    border-radius: 15px;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    overflow: hidden;
+    background-color: #e59fe0;
 }
 
 .book p {
+    margin-left: 10px;
     white-space: pre;
+    font-size: 20px;
+    line-height: 29px;
+    margin-bottom: 0;
 }
 
-.delete {
-    border: 1px solid black;
+.buttons {
+    padding: 10px;
+    align-self: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem;
+}
+
+.buttons * {
+    border-radius: 0.8rem;
+    padding: 7px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.update {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+button {
+    border: 3px solid #3a68e9;
+    outline: none;
+}
+
+button:hover {
+    transition: all 0.3s ease-in-out;
+    background-color: #3a68e9;
+    border: 3px solid #982de9;
 }
