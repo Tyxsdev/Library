@@ -6,23 +6,21 @@ const button = document.querySelector('button');
 const bookContainer = document.querySelector('.books-container');
 const bookPlaceHolder = [...paragraph];
 
-function Toggle() {}
+class Books {
+  constructor(_title, _author, _pages, _status) {
+    this.title = _title;
+    this.author = _author;
+    this.pages = _pages;
+    this.status = _status;
+  }
 
-Toggle.prototype.changeStatus = function () {
-  this.read = `finished`;
-};
+  info = () =>
+    `${this.title}, by ${this.author}, ${this.pages} pages, ${this.status}. `;
 
-function Books(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.info = function () {
-    return `${title}, by ${author}, ${pages} pages, ${read}. `;
-  };
+  changeStatus(newStatus) {
+    this.status = newStatus;
+  }
 }
-
-Books.prototype = Object.create(Toggle.prototype);
 
 function addBookToLibrary(book) {
   if (bookContainer.textContent === 'Sooooooo empty') {
@@ -48,7 +46,7 @@ function addBookToLibrary(book) {
       bookPlaceHolder[i].textContent = `Title: ${book.title} \r\n`;
       bookPlaceHolder[i].textContent += `Author: ${book.author}\r\n`;
       bookPlaceHolder[i].textContent += `Number of pages: ${book.pages}\r\n`;
-      bookPlaceHolder[i].textContent += `Lecture: ${book.read}`;
+      bookPlaceHolder[i].textContent += `Lecture: ${book.status}`;
       const remove = document.createElement('button');
       const update = document.createElement('button');
       const buttonContainer = arrayOfDivs[i].querySelector('div');
@@ -61,11 +59,11 @@ function addBookToLibrary(book) {
       remove.addEventListener('click', deleteBook);
 
       update.addEventListener('click', () => {
-        book.changeStatus();
+        book.changeStatus('Finished');
         bookPlaceHolder[i].textContent = `Title: ${book.title} \r\n`;
         bookPlaceHolder[i].textContent += `Author: ${book.author}\r\n`;
         bookPlaceHolder[i].textContent += `Number of pages: ${book.pages}\r\n`;
-        bookPlaceHolder[i].textContent += `Lecture: ${book.read}`;
+        bookPlaceHolder[i].textContent += `Lecture: ${book.status}`;
       });
       break;
     }
