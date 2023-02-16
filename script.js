@@ -41,7 +41,7 @@ function addBookToLibrary(book) {
     arrayOfDivs.push(newDiv);
   }
   for (let i = 0; i < myLibrary.length; i++) {
-    bookPlaceHolder[i].dataset.index = `${i}`;
+    arrayOfDivs[i].dataset.index = i;
     if (bookPlaceHolder[i].textContent === '') {
       bookPlaceHolder[i].textContent = `Title: ${book.title} \r\n`;
       bookPlaceHolder[i].textContent += `Author: ${book.author}\r\n`;
@@ -58,12 +58,12 @@ function addBookToLibrary(book) {
       buttonContainer.appendChild(update);
       remove.addEventListener('click', deleteBook);
 
-      update.addEventListener('click', () => {
+      update.addEventListener('click', (e) => {
         book.changeStatus('Finished');
-        bookPlaceHolder[i].textContent = `Title: ${book.title} \r\n`;
-        bookPlaceHolder[i].textContent += `Author: ${book.author}\r\n`;
-        bookPlaceHolder[i].textContent += `Number of pages: ${book.pages}\r\n`;
-        bookPlaceHolder[i].textContent += `Lecture: ${book.status}`;
+        e.target.parentElement.previousElementSibling.textContent = `Title: ${book.title} \r\n`;
+        e.target.parentElement.previousElementSibling.textContent += `Author: ${book.author}\r\n`;
+        e.target.parentElement.previousElementSibling.textContent += `Number of pages: ${book.pages}\r\n`;
+        e.target.parentElement.previousElementSibling.textContent += `Lecture: ${book.status}`;
       });
       break;
     }
@@ -111,7 +111,8 @@ function getForm(e) {
 button.addEventListener('click', getForm);
 
 function deleteBook(e) {
-  const index = e.target.parentNode.parentNode.dataset;
+  const { index } = e.target.parentNode.parentNode.dataset;
+  console.log(index);
   e.target.parentElement.previousElementSibling.remove();
   e.target.nextElementSibling.remove();
   e.target.parentNode.parentNode.remove();
